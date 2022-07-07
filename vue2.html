@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comments</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <form>
+        <input type="text" id="comment" v-model="commentInput" />
+        <input type="button" id="postComment" value="Post" @click="postComment"/>
+      </form>
+      <ul id="commentList">
+          <li v-for="comment in commentList">{{comment}}</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    // Write your code here
+    var vm = new Vue({
+      el: '#app',
+      data() {
+          return {
+            commentInput: '',
+            commentList: ["comment!"],
+          }
+      },
+      methods: {
+          postComment() {
+              console.log('comment posted');
+            if (this.commentInput.length) {
+                this.commentList.push(this.commentInput);
+                this.commentInput = '';
+            }
+          }
+      }
+    });
+        
+    setTimeout(() => console.log(document.getElementById("commentList").innerHTML));
+  </script>
+</body>
+</html>

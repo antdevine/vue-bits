@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <div class="error-message">
+        <!-- Display error message here -->
+        <p v-if="submitted">{{displayErrorMessage}}</p>
+      </div>
+
+      <form id="feedback">
+        <input type="radio" value="delighted" v-model="delightedRadio" required /> Delighted
+        <input type="checkbox" v-model="donateCheckbox" /> Donate<br />
+        <input type="radio" value="not-delighted" v-model="delightedRadio" required /> Not delighted
+        <input type="text" v-model="reasonString" /> Reason<br />
+        <input type="button" value="Submit feedback" @click="submitted = true" />
+      </form>
+    </div>  
+  </div>
+  <script>
+    // Write your code here
+    var vm = new Vue({
+      el: "#app",
+      data() {
+        return {
+          delightedRadio: '',
+          donateCheckbox: false,
+          reasonString: '',
+          submitted: false
+        }
+      },
+      computed: {
+        displayErrorMessage() {
+          let message = '';
+          const ruleOne = this.delightedRadio !== 'delighted' && this.donateCheckbox;
+          const ruleTwo = this.delightedRadio === 'not-delighted' && this.reasonString.length === 0;
+          if(ruleOne) {
+            message = 'RULE 1 BROKEN';
+          }
+          if(ruleTwo) {
+            message = 'RULE 2 BROKEN';
+          }
+          if(ruleOne && ruleTwo) {
+            message = 'BOTH RULE BROKEN';
+          }
+
+          return message;
+        }
+      }
+    });
+    
+    setTimeout(() => console.log(document.getElementById("app").innerHTML));
+  </script>
+</body>
+</html>
